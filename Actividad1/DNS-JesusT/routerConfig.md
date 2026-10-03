@@ -4,6 +4,8 @@
 #### Proyecto: [[Actividad1]]
 #### Encargado: Jesús Torres
 ---
+>Script para la configuración dns y dhcp:
+
 ```text
 enable
 configure terminal
@@ -13,8 +15,8 @@ hostname R1-ConectaBarrio
 
 ! 2. Configuracion de la interfaz conectada al Switch principal de la LAN
 
-! Verificar si la interfaz fisica conectada es G0/0/0 o G0/0/1
-interface GigabitEthernet0/0/0
+! Verificar si la interfaz fisica conectada es G0/0 o G0/1
+interface GigabitEthernet0/0
  description Conexión a LAN Conecta Barrio
  ip address 192.168.60.1 255.255.255.0
  no shutdown
@@ -40,3 +42,39 @@ end
 write memory
 ```
 ---
+>Comprobar en el router que esté funcionando:
+
+```text
+! Para ver el estado de la ip al puerto, debe aparecer:
+!GigabitEthernet0/0 192.168.60.1 YES manual up up
+
+show ip interface brief
+```
+
+```text
+! Para ver que funcione el dhcp, debe aparecer:
+! Pool POOL_CONECTABARRIO
+
+show ip dhcp pool
+```
+
+>Antes de probar en el pc:
+
+```text
+C:\>ipconfig /renew
+```
+
+>y luego:
+
+```
+C:\>ipconfig /all
+ping 192.168.60.1
+```
+
+El pc debería estar recibiendo correctamente la señal de la red.
+
+> Verificar la asignación en el Router
+
+```
+show ip dhcp binding
+```
